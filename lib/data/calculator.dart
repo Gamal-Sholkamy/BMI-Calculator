@@ -24,14 +24,14 @@ class Calculator{
   }
   String getFinalFeedback(){
     if(_bmi!>=25){
-      return "you have higher than normal in Weight,try to do sport";
+      return "you have higher than normal in Weight, try to do sport";
     }
     else if(_bmi!>18.5){
-      return "you are in the normal Weight,Good Work";
+      return "you are in the normal Weight, Good Work";
 
     }
     else {
-      return "you have lower than normal in Weight,try to eat more !";
+      return "you have lower than normal in Weight, try to eat more !";
 
     }
   }
