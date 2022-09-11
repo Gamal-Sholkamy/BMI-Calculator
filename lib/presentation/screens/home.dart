@@ -1,5 +1,7 @@
 import 'package:bmi_calculator/business_logic/home_bloc/cubit.dart';
 import 'package:bmi_calculator/business_logic/home_bloc/states.dart';
+import 'package:bmi_calculator/core/colors.dart';
+import 'package:bmi_calculator/data/calculator.dart';
 import 'package:bmi_calculator/presentation/screens/result.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -15,11 +17,12 @@ class HomeScreen extends StatelessWidget {
         builder: (context, state) {
           HomeCubit homeCubit = HomeCubit.get(context);
           return Scaffold(
-            backgroundColor: Colors.white,
+            backgroundColor: MyColors.myInActiveColor,
             appBar: AppBar(
+              elevation: 10.0,
               centerTitle: true,
-              backgroundColor: Colors.black,
-              title: const Text("BMI Calculator"),
+              backgroundColor: MyColors.myInActiveColor,
+              title: const Text("BMI Calculator",style: TextStyle(color: Colors.white),),
             ),
             body: Padding(
               padding: const EdgeInsets.all(10.0),
@@ -40,8 +43,8 @@ class HomeScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: homeCubit.isMale
-                                          ? Colors.greenAccent
-                                          : Colors.teal),
+                                          ? MyColors.myActiveColor
+                                          : MyColors.myInActiveColor),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
@@ -56,7 +59,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Text(
                                         "Male",
-                                        style: TextStyle(color: Colors.black,fontSize: 20),
+                                        style: TextStyle(color: Colors.white,fontSize: 18),
                                       ),
                                     ],
                                   ),
@@ -75,8 +78,8 @@ class HomeScreen extends StatelessWidget {
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
                                       color: homeCubit.isMale
-                                          ? Colors.teal
-                                          : Colors.greenAccent),
+                                          ? MyColors.myInActiveColor
+                                          : MyColors.myActiveColor),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: const [
@@ -91,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                       Text(
                                         "Female",
-                                        style: TextStyle(color: Colors.black,fontSize: 20),
+                                        style: TextStyle(color: Colors.white,fontSize: 18),
                                       ),
                                     ],
                                   ),
@@ -104,34 +107,44 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: Container(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          const Text("Height",style: TextStyle(fontSize: 22,fontWeight: FontWeight.bold),),
-                          const SizedBox(
-                            height: 10,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            textBaseline: TextBaseline.alphabetic,
-                            children:  [
-                              Text("${homeCubit.height.round()}",style: const TextStyle(fontWeight: FontWeight.bold,fontSize: 22),),
-                              const SizedBox(width: 2,),
-                              const Text("CM",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16))
-                            ],
-                          ),
-                          Slider(
-                            min: 110,
-                            max: 220,
-                            value: homeCubit.height,
-                            onChanged: (v) {
-                              homeCubit.changeHeight(v);
-                            },
-                          ),
-                        ],
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 15),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: MyColors.myActiveColor,
+                          borderRadius: BorderRadius.circular(10)
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            const Text("Height",style: TextStyle(color: Colors.white,fontSize: 22,fontWeight: FontWeight.bold),),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.baseline,
+                              textBaseline: TextBaseline.alphabetic,
+                              children:  [
+                                Text("${homeCubit.height.round()}",style: const TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 22),),
+                                const SizedBox(width: 5,),
+                                const Text("CM",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 15))
+                              ],
+                            ),
+                            Slider(
+                              inactiveColor:MyColors.myInActiveColor,
+                              activeColor: MyColors.myInActiveColor,
+                              thumbColor: MyColors.myBottomColor,
+                              min: 110,
+                              max: 220,
+                              value: homeCubit.height,
+                              onChanged: (v) {
+                                homeCubit.changeHeight(v);
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -148,20 +161,19 @@ class HomeScreen extends StatelessWidget {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: homeCubit.isMale
-                                          ? Colors.greenAccent
-                                          : Colors.teal),
+                                      color:MyColors.myActiveColor),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:  [
-                                      const Text("Age",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                      const Text("Age",style: TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                       const SizedBox(height: 10,),
-                                       Text("${homeCubit.age}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                       Text("${homeCubit.age}",style: const TextStyle(color: Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                       const SizedBox(height: 10,),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           CircleAvatar(
+                                            backgroundColor: MyColors.myActiveColor,
                                             radius: 20,
                                             child: IconButton(
                                               onPressed: (){
@@ -172,6 +184,7 @@ class HomeScreen extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 20,),
                                           CircleAvatar(
+                                            backgroundColor: MyColors.myActiveColor,
                                             radius: 20,
                                             child: IconButton(
                                               onPressed: (){
@@ -199,20 +212,19 @@ class HomeScreen extends StatelessWidget {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(10),
-                                      color: homeCubit.isMale
-                                          ? Colors.greenAccent
-                                          : Colors.teal),
+                                      color: MyColors.myActiveColor),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:  [
-                                      const Text("Weight",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                      const Text("Weight",style: TextStyle(color:Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                       const SizedBox(height: 10,),
-                                      Text("${homeCubit.weight}",style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
+                                      Text("${homeCubit.weight}",style: const TextStyle(color:Colors.white,fontSize: 20,fontWeight: FontWeight.bold),),
                                       const SizedBox(height: 10,),
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           CircleAvatar(
+                                            backgroundColor: MyColors.myActiveColor,
                                             radius: 20,
                                             child: IconButton(
                                               onPressed: (){
@@ -223,6 +235,7 @@ class HomeScreen extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 20,),
                                           CircleAvatar(
+                                            backgroundColor: MyColors.myActiveColor,
                                             radius: 20,
                                             child: IconButton(
                                               onPressed: (){
@@ -248,15 +261,19 @@ class HomeScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
-                      color: Colors.tealAccent,
-                      borderRadius: BorderRadius.circular(15)
+                      color: MyColors.myBottomColor,
+                      borderRadius: BorderRadius.circular(8)
                     ),
                     child: OutlinedButton(
 
                         onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context)=>const ResultScreen()));
+                          Calculator calculator=Calculator(height: homeCubit.height.toInt(), weight: homeCubit.weight);
+                          String result=calculator.calculateBMI();
+                          String state=calculator.getFinalState();
+                          String feedback=calculator.getFinalFeedback();
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=> ResultScreen(state,result,feedback)));
                         },
-                        child: const Text("CALCULATE",style: TextStyle(color: Colors.black),)),
+                        child: const Text("CALCULATE",style: TextStyle(color: Colors.white),)),
                   ),
                 ],
               ),
